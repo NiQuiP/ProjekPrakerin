@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <form id="myForm" method="post">
+        <input type="username" id="username">
+        <hr>
+        <input type="email" id="email">
+        <hr>
+        <input type="submit">
+    </form>
+</body>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+    document.getElementById('myForm').addEventListener('submit', function (event) {
+        event.preventDefault();
+
+        var username = document.getElementById('username').value;
+        var email = document.getElementById('email').value;
+
+        var currentTime = new Date();
+        var limitTIme = new Date();
+        limitTIme.setHours(7, 0, 0);
+
+        if (username.trim() == '') {
+            alert('Username tidak boleh kosong');
+        } else if (email.trim() == '') {
+            alert('email tidak boleh kosong');
+        } else if (currentTime > limitTIme) {
+            Swal.fire({
+                // position: 'center',
+                icon: 'error',
+                title: 'Melewati batas waktu',
+                // showConfirmButton: false,
+                // timer: 1500
+            })
+        } else {
+            // var submitButton = document.querySelector('button[type="submit"]');
+            // submitButton.disable = true;
+
+            // setTimeout (function() {
+            //     submitButton.disable = false;
+            // }, 5000);
+            return true;
+        }
+    });
+</script>
+
+</html>

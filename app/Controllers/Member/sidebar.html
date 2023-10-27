@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>
+    <?= $halaman; ?>
+  </title>
+  <link rel="stylesheet" href="sidebar.css" />
+  <link rel="stylesheet" href="<?= base_url('admin'); ?>/css/my-profile.css">
+  <link rel="stylesheet" href="<?= base_url('admin'); ?>/css/attendance.css">
+  <link rel="stylesheet" href="<?= base_url('admin'); ?>/css/permissions.css">
+  <link rel="stylesheet" href="setting.css">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+    integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin="">
+    </script>
+  <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <script src="https://kit.fontawesome.com/fb6ebd8b45.js" crossorigin="anonymous"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&family=Roboto+Condensed&display=swap"
+    rel="stylesheet" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous" />
+
+
+</head>
+
+<body class="kontainer">
+  <!-- Sidebar -->
+  <nav class="navigasi">
+    <div class="wrapperNav">
+      <header>
+        <div class="text">
+          <h1 class="nama-lengkap">
+            <!-- <?= session()->get('member_nama_lengkap') ?> -->
+            admin
+          </h1>
+          <h2 class="sekolah">
+            smkn 2 jakarta
+            <!-- <?= session()->get('member_nama_instansi') ?> -->
+          </h2>
+        </div>
+      </header>
+      <main>
+        <ul class="menu-links">
+          <li class="nav-link" id="<?= (isset($aktif_profile)) ? 'aktif' : '' ?>">
+            <a href="<?= site_url('member/profile') ?>"> My Profile </a>
+          </li>
+          <li class="nav-link" id="<?= (isset($aktif_attendance)) ? 'aktif' : '' ?>">
+            <a href="<?= site_url('member/attendance2') ?>"> Attendance Form </a>
+          </li>
+          <li class="nav-link" id="<?= (isset($aktif_permission)) ? 'aktif' : '' ?>">
+            <a href="<?= site_url('member/permission2') ?>"> Permission Form</a>
+          </li>
+          <li class="nav-link" id="<?= (isset($aktif_history)) ? 'aktif' : '' ?>">
+            <a href="<?= site_url('member/history2') ?>"> History Absen </a>
+          </li>
+          <li class="nav-link" id="<?= (isset($aktif_setting)) ? 'aktif' : '' ?>">
+            <a href="<?= site_url('member/setting2') ?>"> Settings & Privacy </a>
+          </li>
+        </ul>
+      </main>
+    </div>
+  </nav>
+  <!-- Main Content -->
+  <main class="kontainer-content">
+    <div class="wrapper-icon">
+      <i class="bx bx-menu"></i>
+    </div>
+    <header class="first">
+      <div class="wrapper-name">
+        <div class="user-text">
+          admin
+        </div>
+        <div class="user-profile">
+          <img src="" alt="" />
+        </div>
+      </div>
+      <div class="dropdownMenu">
+        <div class="wrapper-user">
+          <img src="<?= base_url(LOKASI_UPLOAD . '/' . $namaFile) ?>" alt="" />
+          <div class="userText">
+            <?= session()->get('member_username') ?>
+          </div>
+        </div>
+        <div class="wrapper-a">
+          <a href="<?= site_url('member/profile'); ?>">Lihat Profile</a>
+        </div>
+        <div class="wrapper-logout">
+          <i class="fa-solid fa-right-from-bracket"></i>
+          <a href="<?= site_url('member/logout') ?>">Keluar</a>
+        </div>
+      </div>
+    </header>
+    <header class="second">
+      <div class="text">
+        setting
+      </div>
+    </header>
+    <!-- Template Main Content -->
+
+    <main class="wrapper-content-setting">
+      <div class="kontainer-profile">
+        <div class="wrapper-profile">
+          <div class="profile-body">
+            <img src="<?= base_url(LOKASI_UPLOAD . '/' . $namaFile) ?>" alt="" />
+          </div>
+        </div>
+      </div>
+      <div class="wrapper-identity-setting">
+        <form action="">
+          <div class="identitas-setting">
+            <label for="email">Email : </label>
+            <input type="email" name="email" id="email"
+              class="form-control <?= ($validation->hasError('email')) ? 'is-invalid' : '' ?>"
+              value="<?= (isset($email)) ? $email : '', set_value('email') ?>" />
+            <div class="invalid-feedbak">
+              <h3>
+                <?= ($validation->getError('email')); ?>
+              </h3>
+            </div>
+          </div>
+
+          <div class="identitas-setting">
+            <label for="username">Username : </label>
+            <input type="text" name="username" id="username"
+              class="form-control <?= ($validation->hasError('username')) ? 'is-invalid' : '' ?>"
+              value="<?= (isset($username)) ? $username : '', set_value('username') ?>" />
+            <div class="invalid-feedbak">
+              <h3>
+                <?= ($validation->getError('username')); ?>
+              </h3>
+            </div>
+          </div>
+          <div class="identitas-setting">
+            <label for="password_old">Current Password : </label>
+            <input type="password" name="password_old" id="password_old"
+              class="form-control <?= ($validation->hasError('password_old')) ?>" />
+            <div class="invalid-feedbak">
+              <h3>
+                <?= ($validation->getError('password_old')); ?>
+              </h3>
+            </div>
+          </div>
+          <div class="identitas-setting">
+            <label for="password_new">New Password : </label>
+            <input type="password" name="password_new" id="password_new"
+              class="form-control <?= ($validation->hasError('password_new')) ?>" />
+            <div class="invalid-feedbak">
+              <h3>
+                <?= ($validation->getError('password_new')); ?>
+              </h3>
+            </div>
+          </div>
+          <div class="identitas-setting">
+            <label for="konfirmasi_password_new ">Repeat New Password:</label>
+            <input type="password" name="konfirmasi_password_new" id="konfirmasi_password_new"
+              class="form-control <?= ($validation->hasError('konfirmasi_password_new')) ?>" />
+            <div class="invalid-feedbak">
+              <h3>
+                <?= ($validation->getError('konfirmasi_password_new')); ?>
+              </h3>
+            </div>
+          </div>
+          <input type="submit" name="submit" value="Save" class="button">
+      </div>
+      </form>
+      </div>
+      <script src="<?= base_url('admin') ?>/js/script-pr.js"></script>
+    </main>
+  </main>
+  <!-- JS -->
+
+
+  <script src="<?= base_url('admin') ?>/js/script-prvcy.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <!-- <script>
+    
+        Swal.fire({
+            icon: 'success',
+            title: 'Test',
+        })
+    
+    </script> -->
+</body>
+
+</html>
