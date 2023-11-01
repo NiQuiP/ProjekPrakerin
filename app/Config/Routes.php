@@ -10,53 +10,51 @@ $routes->setAutoRoute(true);
 $routes->setDefaultNamespace('App\Controllers');
 
 
-$routes->group('member/', ['filter' => 'auth'], function ($routes) {
-    $routes->add('my-profile', 'Member\user::index');
-    $routes->add('attendance', 'Member\user::attendance');
-    $routes->post('attendance', 'Member\user::attendanceProcess', ['as' => 'user.attendance']);
-    $routes->add('permission', 'Member\user::permission');
-    $routes->post('permission', 'Member\user::permissionProcess', ['as' => 'user.permission']);
-    $routes->add('history', 'Member\user::history');
-    $routes->add('setting', 'Member\user::setting');
-    $routes->post('setting', 'Member\user::settingProcess', ['as' => 'user.setting']);
-    $routes->add('admin', 'Member\auth::admin');
+$routes->group('user/', ['filter' => 'auth'], function ($routes) {
+    $routes->get('my-profile', 'user\user::index');
+    $routes->get('attendance', 'user\user::attendance');
+    $routes->add('attendanceProccess', 'user\user::attendanceProcess');
+    $routes->get('permission', 'user\user::permission');
+    $routes->add('permissionProccess', 'user\user::permissionProcess');
+    $routes->add('history', 'user\user::history');
+    $routes->get('setting', 'user\user::setting');
+    $routes->add('settingProccess', 'user\user::settingProcess');
+    $routes->add('admin', 'user\auth::admin');
 
 });
+$routes->get('/', 'user\auth::login', ['filter' => 'noauth']);
 $routes->group('/', ['filter' => 'noauth'], function ($routes) {
-    $routes->add('login', 'Member\auth::login');
-    $routes->post('projek_pkl/public/login', 'Member\auth::loginProcess', ['as' => 'user.login']);
-    $routes->add('forgetpassword', 'Member\auth::forgetPassword');
-    $routes->add('resetpassword', 'Member\auth::resetPassword');
-    $routes->post('resetpassword', 'Member\auth::resetPasswordProcess', ['as' => 'user.resetpassword']);
-    $routes->add('member/verifikasi', 'Member\auth::verifikasi');
-    $routes->add('resetpassword', 'Member\auth::resetPassword');
+    $routes->get('login', 'user\auth::login');
+    $routes->add('loginProccess', 'user\auth::loginProcess');
+    $routes->add('forgetpassword', 'user\auth::forgetPassword');
+    $routes->add('resetpassword', 'user\auth::resetPassword');
+    $routes->post('resetpassword', 'user\auth::resetPasswordProcess', ['as' => 'user.resetpassword']);
+    $routes->add('user/verifikasi', 'user\auth::verifikasi');
+    $routes->add('resetpassword', 'user\auth::resetPassword');
 
 });
 
-$routes->group('member/', ['filter' => 'authregister'], function ($routes) {
-    $routes->add('index', 'Member\auth::index');
-    $routes->post('index', 'Member\auth::indexHandler', ['as' => 'member.index.handler']);
+$routes->group('user/', ['filter' => 'authregister'], function ($routes) {
+    $routes->add('index', 'user\auth::index');
+    $routes->post('index', 'user\auth::indexHandler', ['as' => 'user.index.handler']);
 });
 
 
 $routes->group('/', ['filter' => 'noauthregister'], function ($routes) {
-    $routes->add('register', 'Member\auth::register');
-    $routes->post('register', 'Member\auth::registerProcess', ['as' => 'user.register']);
+    $routes->get('register', 'user\auth::register');
+    $routes->add('registerProccess', 'user\auth::registerProcess');
 });
 
 
-$routes->add('member/kirim_ulang', 'Member\auth::kirim_ulang_token');
-$routes->add('member/logout', 'Member\auth::logout');
-$routes->get('member/profile', 'Member\template::profil');
-$routes->get('member/attendance2', 'Member\template::attendance');
-$routes->get('member/permission2', 'Member\template::permission');
-$routes->get('member/history2', 'Member\template::history');
-$routes->get('member/setting2', 'Member\template::setting');
+$routes->add('user/kirim_ulang', 'user\auth::kirim_ulang_token');
+$routes->add('user/logout', 'user\auth::logout');
 
-$routes->get('/webcamaja', 'WebcamController::index');
-$routes->post('/webcam/capture', 'WebcamController::capture');
-
-$routes->get('admin/dashboard', 'admin\admin::dashboard');
+$routes->group('admin', function ($routes) {
+    $routes->get('dashboard', 'admin\admin::dashboard');
+    $routes->get('data-absen', 'admin\admin::data_absen');
+    $routes->get('data-siswa', 'admin\admin::data_siswa');
+    $routes->get('data-mahasiswa', 'admin\admin::data_mahasiswa');
+});
 
 // $routes->group('/', function ($routes) {
 //     $routes->add('login', 'User\Auth::login');

@@ -45,7 +45,6 @@ if (navigator.geolocation) {
   navigator.geolocation.getCurrentPosition(function (position) {
     const latitude = position.coords.latitude;
     const longitude = position.coords.longitude;
-    const accuracy = position.coords.accuracy;
 
     // Memasukkan nilai latitude dan longitude ke dalam input
     latitudeInput.value = latitude;
@@ -55,7 +54,6 @@ if (navigator.geolocation) {
       maxZoom: 18,
     }).addTo(map);
     var marker = L.marker([latitude, longitude]).addTo(map);
-    var circle = L.circle([latitude, longitude], {radius: accuracy}).addTo(map);
   });
 }
 

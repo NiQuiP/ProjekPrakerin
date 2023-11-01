@@ -12,7 +12,7 @@ class NoAuthFilter implements FilterInterface
     {
         // Do something here
         if (session()->get('member_username')) {
-            return redirect()->to('member/user');
+            return redirect()->to('user/my-profile');
         }
 
     }

@@ -30,6 +30,7 @@
     width: 100%;
     font-size: 18px;
     background: var(--background-color);
+    z-index: 0;
 }
 
 .wrapper-body-attendance .body-satu-attendance {

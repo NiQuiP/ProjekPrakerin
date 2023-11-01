@@ -15,7 +15,7 @@ class AuthRegister implements FilterInterface
         //     return redirect()->to('member/login');
         // }
         if (!session()->get('akun_username')) {
-            return redirect()->to('member/login');
+            return redirect()->to('register');
         }
         // if (!session()->get('akun_username')) {
         //     return redirect()->to('admin/login');

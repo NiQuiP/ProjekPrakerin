@@ -172,6 +172,7 @@ main.kontainer-content header.first {
     main.kontainer-content header.first {
         top: 0px;
         position: sticky;
+        z-index: 1;
     }
 
     .wrapper-content-setting {

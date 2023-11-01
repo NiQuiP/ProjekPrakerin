@@ -4,8 +4,12 @@ namespace App\Controllers\Admin;
 
 use App\Controllers\BaseController;
 use App\Models\AdminModel;
+use App\Models\MemberModel;
 use App\Models\UserModel;
 use App\Models\Absensi;
+use CodeIgniter\Pager\Pager;
+use CodeIgniter\HTTP\RequestInterface;
+use Config\Services;
 
 class Admin extends BaseController
 {
@@ -226,9 +230,86 @@ class Admin extends BaseController
     public function dashboard()
     {
         $absensi = new Absensi();
-        $absensiInfo = $absensi->where('email')->findAll();
-        $data['dataAbsen'] = $absensiInfo;
-        echo view('admin/v_dashboard', $data);
+        $jumlahBaris = 5;
+
+        $absensiInfo = $absensi->select('nim_nis, nama_lengkap, nama_instansi')->distinct('nim_nis')->get()->getResult();
+        $totalAbsensi = [];
+        foreach ($absensiInfo as $nim_nis) {
+            $nimUser = $nim_nis->nim_nis;
+            $totalAbsensi[$nimUser]['masuk'] = $absensi->getTotalAbsensiByStatus($nimUser, 'Masuk');
+            $totalAbsensi[$nimUser]['izin'] = $absensi->getTotalAbsensiByStatus($nimUser, 'Izin');
+            $totalAbsensi[$nimUser]['sakit'] = $absensi->getTotalAbsensiByStatus($nimUser, 'Sakit');
+        }
+        $user = new MemberModel();
+
+        $jumlahSekolah = $user->getJumlahInstansi('sekolah');
+        $jumlahUniv = $user->getJumlahInstansi('universitas');
+        $totalSiswa = $user->getTotalUser('Siswa');
+        $totalMahasiswa = $user->getTotalUser('Mahasiswa');
+        $aktif_dashboard = 'aktif';
+
+        $data = [
+            'dataAbsen' => $absensiInfo,
+            'totalAbsensi' => $totalAbsensi,
+            'totalSekolah' => $jumlahSekolah,
+            'totalUniv' => $jumlahUniv,
+            'totalMahasiswa' => $totalMahasiswa,
+            'totalSiswa' => $totalSiswa,
+            'aktif_dashboard' => $aktif_dashboard
+        ];
+        return view('admin/v_dashboard', $data);
     }
 
+    public function data_absen()
+    {
+        $absensi = new Absensi();
+        $jumlahBaris = 10;
+        $currentPage = $this->request->getVar('page_absensi');
+        $dataAbsen = $absensi->orderBy('id', 'desc')->paginate($jumlahBaris, 'absensi');
+        $pager = $absensi->pager;
+        $nomor = nomor($currentPage, $jumlahBaris);
+
+        $data = [
+            'dataAbsen' => $dataAbsen,
+            'pager' => $pager,
+            'nomor' => $nomor,
+
+        ];
+        return view('admin/v_dataAbsen', $data);
+    }
+
+    public function data_siswa()
+    {
+        $user = new MemberModel();
+        $jumlahBaris = 10;
+        $currentPage = $this->request->getVar('page_siswa');
+        $dataSiswa = $user->where('jenis_user', 'Siswa')->findAll();
+        $nomor = nomor($currentPage, $jumlahBaris);
+
+        $data = [
+            'dataSiswa' => $dataSiswa,
+            'nomor' => $nomor,
+
+        ];
+
+        return view('admin/v_dataSiswa', $data);
+    }
+    public function data_mahasiswa()
+    {
+        $user = new MemberModel();
+        $jumlahBaris = 10;
+        $currentPage = $this->request->getVar('page_mahasiswa');
+        $dataMahasiswa = $user->where('jenis_user', 'mahasiswa')->paginate($jumlahBaris, 'mahasiswa');
+        $pager = $user->pager;
+        $nomor = nomor($currentPage, $jumlahBaris);
+
+        $data = [
+            'dataMahasiswa' => $dataMahasiswa,
+            'pager' => $pager,
+            'nomor' => $nomor,
+
+        ];
+
+        return view('admin/v_dataMahasiswa', $data);
+    }
 }

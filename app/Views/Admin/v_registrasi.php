@@ -24,7 +24,7 @@
                                     <h3 class="text-center font-weight-light my-4">Registrasi Akun</h3>
                                 </div>
                                 <div class="card-body">
-                                    <form method="POST" action="">
+                                    <form method="POST" action="<?= site_url('member/registerProccess'); ?>">
                                         <?php
                                         $session = \Config\Services::session();
                                         if ($session->getFlashdata('warning')) {

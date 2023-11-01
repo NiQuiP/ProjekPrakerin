@@ -12,7 +12,7 @@ class AuthFilter implements FilterInterface
     {
         // Do something here
         if (!session()->get('member_username')) {
-            return redirect()->to('/login');
+            return redirect()->to('/');
         }
         // if (!session()->get('akun_username')) {
         //     return redirect()->to('admin/login');

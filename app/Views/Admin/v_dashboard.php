@@ -15,7 +15,7 @@
                                     Sekolah
                                 </div>
                                 <div class="h5 mb-0 font-weight-bold text-gray-800" name="sekolah">
-                                    4 <span>Sekolah</span>
+                                    <?= $totalSekolah; ?>
                                 </div>
                             </div>
                             <div class="col-auto">
@@ -34,7 +34,7 @@
                                     Siswa
                                 </div>
                                 <div class="h5 mb-0 font-weight-bold text-gray-800" name="card-ssw">
-                                    12 <span>Siswa</span>
+                                    <?= $totalSiswa; ?>
                                 </div>
                             </div>
                             <div class="col-auto">
@@ -72,7 +72,7 @@
                                     Universitas
                                 </div>
                                 <div class="h5 mb-0 font-weight-bold text-gray-800" name="univ">
-                                    3 <span>Universitas</span>
+                                    <?= $totalUniv; ?>
                                 </div>
                             </div>
                             <div class="col-auto">
@@ -91,7 +91,7 @@
                                     Mahasiswa
                                 </div>
                                 <div class="h5 mb-0 font-weight-bold text-gray-800" name="card-mhs">
-                                    9 <span>Mahasiswa</span>
+                                    <?= $totalMahasiswa; ?>
                                 </div>
                             </div>
                             <div class="col-auto">
@@ -103,7 +103,7 @@
             </div>
         </div>
     </div>
-    <div class="title text-dark px-1 rounded-top mt-2 pl-3">Update Absen Bulan Ini</div>
+    <div class="title text-dark px-1 rounded-top mt-2 pl-3">Update Absen</div>
     <div class="card shadow mb-2">
         <div class="card-body border-bottom">
             <div class="table-responsive">
@@ -119,31 +119,34 @@
                     </thead>
                     <tbody>
                         <?php foreach ($dataAbsen as $v) {
-                            $nomor = 1; ?>
+                            ?>
                             <tr>
                                 <td class="dashboard"><img src="ikura.jpeg" alt="" />
                                     <div class="wrapper-tdSatu">
                                         <p class="dashboard nama" name="nama">
-                                            <?= $v['nama_lengkap']; ?>
+                                            <?= $v->nama_lengkap ?>
                                         </p>
                                         <p class="dashboard ssw" name="ssw">
-                                            <?= $v['nama_instansi']; ?>
+                                            <?= $v->nama_instansi ?>
                                         </p>
                                     </div>
                                 </td>
                                 <td>
-                                    <?= $nomor; ?>
+                                    <?= $totalAbsensi[$v->nim_nis]['masuk']; ?>
                                 </td>
                                 <td>
-                                    <?= $v['nama_lengkap']; ?>
+                                    <?= $totalAbsensi[$v->nim_nis]['izin']; ?>
                                 </td>
-                                <td>SSW</td>
+                                <td>
+                                    <?= $totalAbsensi[$v->nim_nis]['sakit']; ?>
+                                </td>
                                 <td>08.13</td>
                             </tr>
-                            <?php $nomor++;
+                            <?php
                         } ?>
                     </tbody>
                 </table>
+
             </div>
         </div>
     </div>

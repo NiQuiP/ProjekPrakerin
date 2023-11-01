@@ -14,9 +14,9 @@ class NoAuthRegister implements FilterInterface
         // if (session()->get('member_username')) {
         //     return redirect()->to('member/user');
         // }
-        // if (session()->get('akun_username')) {
-        //     return redirect()->to('member/index');
-        // }
+        if (session()->get('akun_username')) {
+            return redirect()->to('user/index');
+        }
     }
 
     public function after(RequestInterface $request, ResponseInterface $response, $arguments = null)

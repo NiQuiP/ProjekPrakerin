@@ -12,6 +12,7 @@ class Absensi extends Model
         'nama_lengkap',
         'email',
         'nim_nis',
+        'jenis_user',
         'instansi_pendidikan',
         'nama_instansi',
         'keterangan',
@@ -22,4 +23,10 @@ class Absensi extends Model
         'checkout_time',
         'waktu_absen',
     ];
+
+    public function getTotalAbsensiByStatus($nimUser, $status)
+    {
+        return $this->where('nim_nis', $nimUser)->where('status', $status)->countAllResults();
+    }
+
 }

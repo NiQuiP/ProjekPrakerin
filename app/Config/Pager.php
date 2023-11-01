@@ -28,6 +28,11 @@ class Pager extends BaseConfig
         'absensitable' => 'App\Views\Pager\absensitable'
     ];
 
+    public $default = [
+        'perPage' => 10,
+        'uriSegment' => 3,
+    ];
+
     /**
      * --------------------------------------------------------------------------
      * Items Per Page

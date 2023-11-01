@@ -46,8 +46,8 @@
             <hr class="sidebar-divider my-0" />
 
             <!-- Nav Item - Dashboard -->
-            <li class="nav-item active">
-                <a class="nav-link" href="dashboard.html">
+            <li class="nav-item <?= (isset($aktif_dashboard)) ? 'active' : '' ?>">
+                <a class="nav-link" href="<?= site_url('admin/dashboard'); ?>">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Dashboard</span></a>
             </li>
@@ -57,7 +57,7 @@
             <!-- Heading -->
 
             <li class="nav-item">
-                <a class="nav-link" href="data-absensi.html">
+                <a class="nav-link" href="<?= site_url('admin/data-absen'); ?>">
                     <i class="fa-solid fa-file-pen" aria-hidden="true"></i>
                     <!-- <i class="fas fa-fw fa-tachometer-alt" aria-hidden="true"></i> -->
                     <span>Data Absensi</span></a>
@@ -73,8 +73,8 @@
                 <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">PILIHAN :</h6>
-                        <a class="collapse-item" href="datauser.html">Siswa</a>
-                        <a class="collapse-item" href="datauserMHS.html">Mahasiswa</a>
+                        <a class="collapse-item" href="<?= site_url('admin/data-siswa'); ?>">Siswa</a>
+                        <a class="collapse-item" href="<?= site_url('admin/data-mahasiswa'); ?>">Mahasiswa</a>
                     </div>
                 </div>
             </li>
@@ -132,7 +132,8 @@
             <!-- Main Content -->
             <div id="content">
                 <!-- Topbar -->
-                <nav class="navbar navbar-expand navbar-light bg-white topbar sticky-top shadow h2">
+                <nav class="navbar navbar-expand navbar-light bg-white topbar sticky-top shadow h2"
+                    style="position:fixed;width:88.5%;">
                     <!-- Sidebar Toggle (Topbar) -->
                     <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
                         <i class="fa fa-bars" aria-hidden="true"></i>
